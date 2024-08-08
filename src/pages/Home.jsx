@@ -181,6 +181,6 @@ Tasks.propTypes = {
       done: PropTypes.bool.isRequired,
     })
   ).isRequired,
-  selectListId: PropTypes.string.isRequired,
+  selectListId: PropTypes.string,
   isDoneDisplay: PropTypes.string.isRequired,
 };
