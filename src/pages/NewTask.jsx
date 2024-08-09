@@ -11,18 +11,24 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [limit, setLimit] = useState(''); // 追加: limitの状態管理
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const navigate = useNavigate();
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (e) => setLimit(e.target.value); // 追加: limitの入力ハンドラー
   const handleSelectList = (id) => setSelectListId(id);
+
+  // JSTからUTCに変換する関数
+  const convertToUTC = (dateString) => new Date(dateString).toISOString();
+
   const onCreateTask = () => {
     const data = {
       title: title,
       detail: detail,
       done: false,
-      limit: '2024-12-12T23:59:59Z',
+      limit: convertToUTC(limit), // 期限をJSTからUTCに変換して設定
     };
 
     axios
@@ -49,7 +55,6 @@ export const NewTask = () => {
       .then((res) => {
         setLists(res.data);
         setSelectListId(res.data[0]?.id);
-        console.log(res.data[0]?.id);
       })
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
@@ -90,6 +95,15 @@ export const NewTask = () => {
             type="text"
             onChange={handleDetailChange}
             className="new-task-detail"
+          />
+          <br />
+          <label>締切日</label> {/* 追加: 締切日の入力フィールド */}
+          <br />
+          <input
+            type="datetime-local"
+            // step="1" // 入力値の間隔(1なら1秒ごと)
+            onChange={handleLimitChange}
+            className="new-task-limit"
           />
           <br />
           <button

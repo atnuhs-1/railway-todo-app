@@ -12,17 +12,20 @@ export const EditTask = () => {
   const [cookies] = useCookies();
   const [title, setTitle] = useState('');
   const [detail, setDetail] = useState('');
+  const [limit, setLimit] = useState(''); // 追加: limitの状態管理
   const [isDone, setIsDone] = useState();
   const [errorMessage, setErrorMessage] = useState('');
   const handleTitleChange = (e) => setTitle(e.target.value);
   const handleDetailChange = (e) => setDetail(e.target.value);
+  const handleLimitChange = (e) => setLimit(`${e.target.value}`); // 追加: limitの入力ハンドラー
   const handleIsDoneChange = (e) => setIsDone(e.target.value === 'done');
+
   const onUpdateTask = () => {
-    console.log(isDone);
     const data = {
       title: title,
       detail: detail,
       done: isDone,
+      limit: convertToUTC(limit),
     };
 
     axios
@@ -55,6 +58,26 @@ export const EditTask = () => {
       });
   };
 
+  // UTCからJST（<input type="datetime-local">のフォーマットに合わせるため）
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    console.log(dateString);
+
+    const year = date.getFullYear();
+    const month = `0${date.getMonth() + 1}`.slice(-2); // 月は0から始まるので+1
+    const day = `0${date.getDate()}`.slice(-2);
+    const hours = `0${date.getHours()}`.slice(-2);
+    const minutes = `0${date.getMinutes()}`.slice(-2);
+
+    console.log(`${year}-${month}-${day}T${hours}:${minutes}`);
+
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  };
+
+  // JSTからUTCに変換する関数（APIの仕様に合わせるため）
+  const convertToUTC = (dateString) => new Date(dateString).toISOString();
+
   useEffect(() => {
     axios
       .get(`${url}/lists/${listId}/tasks/${taskId}`, {
@@ -67,6 +90,7 @@ export const EditTask = () => {
         setTitle(task.title);
         setDetail(task.detail);
         setIsDone(task.done);
+        setLimit(formatDate(task.limit));
       })
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
@@ -96,6 +120,14 @@ export const EditTask = () => {
             onChange={handleDetailChange}
             className="edit-task-detail"
             value={detail}
+          />
+          <br />
+          <input
+            type="datetime-local"
+            // step="1" // 入力値の間隔(1なら1秒ごと)
+            onChange={handleLimitChange}
+            className="new-task-limit"
+            value={limit}
           />
           <br />
           <div>

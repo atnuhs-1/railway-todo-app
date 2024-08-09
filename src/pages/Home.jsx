@@ -123,6 +123,39 @@ export const Home = () => {
   );
 };
 
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  console.log(dateString);
+
+  const year = date.getFullYear();
+  const month = `0${date.getMonth() + 1}`.slice(-2); // 月は0から始まるので+1
+  const day = `0${date.getDate()}`.slice(-2);
+  const hours = `0${date.getHours()}`.slice(-2);
+  const minutes = `0${date.getMinutes()}`.slice(-2);
+
+  console.log(`${year}/${month}/${day} ${hours}:${minutes}`);
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
+// 残り日時を計算する関数
+const calculateRemainingTime = (limit) => {
+  const limitDate = new Date(limit);
+  const now = new Date();
+  const difference = limitDate - now;
+
+  if (difference <= 0) {
+    return '期限切れ';
+  }
+
+  const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((difference / (1000 * 60)) % 60);
+
+  return `${days}日 ${hours}時間 ${minutes}分`;
+};
+
 // 表示するタスク
 const Tasks = (props) => {
   const { tasks, selectListId, isDoneDisplay } = props;
@@ -133,6 +166,7 @@ const Tasks = (props) => {
       <ul>
         {tasks
           .filter((task) => {
+            task.limit = formatDate(task.limit);
             return task.done === true;
           })
           .map((task, key) => (
@@ -144,6 +178,11 @@ const Tasks = (props) => {
                 {task.title}
                 <br />
                 {task.done ? '完了' : '未完了'}
+                <br />
+                <p>
+                  期限：{task.limit} | 残り:{' '}
+                  {calculateRemainingTime(task.limit)}
+                </p>
               </Link>
             </li>
           ))}
@@ -155,6 +194,7 @@ const Tasks = (props) => {
     <ul>
       {tasks
         .filter((task) => {
+          task.limit = formatDate(task.limit);
           return task.done === false;
         })
         .map((task, key) => (
@@ -163,9 +203,14 @@ const Tasks = (props) => {
               to={`/lists/${selectListId}/tasks/${task.id}`}
               className="task-item-link"
             >
-              {task.title}
-              <br />
-              {task.done ? '完了' : '未完了'}
+              <p>{task.title}</p>
+              <div className="state-section">
+                <p>{task.done ? '完了' : '未完了'}</p>
+                <p>
+                  期限：{task.limit} | 残り:{' '}
+                  {calculateRemainingTime(task.limit)}
+                </p>
+              </div>
             </Link>
           </li>
         ))}
