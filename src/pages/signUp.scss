@@ -1,0 +1,33 @@
+@charset "utf-8";
+@import '../variables';
+
+.signup {
+  width: 500px;
+  margin: 0 auto;
+
+  .signup-form {
+    margin: 25px 0;
+    color: #555555;
+
+    .email-input,
+    .name-input,
+    .password-input {
+      width: 100%;
+      font-size: large;
+      height: 30px;
+      margin-bottom: 25px;
+    }
+
+    .signup-button {
+      background-color: $primary-color;
+      color: #ffffff;
+      width: 100px;
+      height: 40px;
+      border-radius: 5px;
+    }
+  }
+
+  .error-message {
+    color: $error-color;
+  }
+}
