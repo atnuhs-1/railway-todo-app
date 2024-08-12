@@ -35,7 +35,6 @@ export const EditTask = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         navigate('/');
       })
       .catch((err) => {
@@ -62,15 +61,11 @@ export const EditTask = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
 
-    console.log(dateString);
-
     const year = date.getFullYear();
     const month = `0${date.getMonth() + 1}`.slice(-2); // 月は0から始まるので+1
     const day = `0${date.getDate()}`.slice(-2);
     const hours = `0${date.getHours()}`.slice(-2);
     const minutes = `0${date.getMinutes()}`.slice(-2);
-
-    console.log(`${year}-${month}-${day}T${hours}:${minutes}`);
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   };

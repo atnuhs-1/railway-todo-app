@@ -15,6 +15,7 @@ export const Home = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [cookies] = useCookies();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -31,6 +32,12 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
+    // ページが読み込まれたときに最初のタブにフォーカスを当てる
+    const firstTab = document.querySelector('.list-tab-item');
+    if (firstTab) {
+      firstTab.focus();
+    }
+
     const listId = lists[0]?.id;
     if (typeof listId !== 'undefined') {
       setSelectListId(listId);
@@ -64,6 +71,29 @@ export const Home = () => {
         setErrorMessage(`タスクの取得に失敗しました。${err}`);
       });
   };
+
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'ArrowRight') {
+      console.log('Right');
+      // 右矢印キーで次のリストを選択
+      const nextIndex = (index + 1) % lists.length;
+      handleSelectList(lists[nextIndex].id);
+
+      // 次のタブにフォーカスを移動
+      const nextTab = document.querySelectorAll('.list-tab-item')[nextIndex];
+      if (nextTab) nextTab.focus();
+    } else if (event.key === 'ArrowLeft') {
+      console.log('Left');
+      // 左矢印キーで前のリストを選択
+      const prevIndex = (index - 1 + lists.length) % lists.length;
+      handleSelectList(lists[prevIndex].id);
+
+      // 前のタブにフォーカスを移動
+      const prevTab = document.querySelectorAll('.list-tab-item')[prevIndex];
+      if (prevTab) prevTab.focus();
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -83,14 +113,18 @@ export const Home = () => {
               </p>
             </div>
           </div>
-          <ul className="list-tab">
+          <ul className="list-tab" role="tablist">
             {lists.map((list, key) => {
               const isActive = list.id === selectListId;
               return (
                 <li
                   key={key}
+                  role="tab"
+                  aria-selected={isActive}
+                  tabIndex={isActive ? 0 : -1} // フォーカス可能にする
                   className={`list-tab-item ${isActive ? 'active' : ''}`}
                   onClick={() => handleSelectList(list.id)}
+                  onKeyDown={(event) => handleKeyDown(event, key)} // キーボードイベントハンドラー
                 >
                   {list.title}
                 </li>
@@ -126,15 +160,11 @@ export const Home = () => {
 const formatDate = (dateString) => {
   const date = new Date(dateString);
 
-  console.log(dateString);
-
   const year = date.getFullYear();
   const month = `0${date.getMonth() + 1}`.slice(-2); // 月は0から始まるので+1
   const day = `0${date.getDate()}`.slice(-2);
   const hours = `0${date.getHours()}`.slice(-2);
   const minutes = `0${date.getMinutes()}`.slice(-2);
-
-  console.log(`${year}/${month}/${day} ${hours}:${minutes}`);
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };

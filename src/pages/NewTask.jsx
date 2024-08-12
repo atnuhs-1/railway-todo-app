@@ -24,12 +24,23 @@ export const NewTask = () => {
   const convertToUTC = (dateString) => new Date(dateString).toISOString();
 
   const onCreateTask = () => {
+
+    if (!title.trim()) {
+      setErrorMessage("タイトルは必須です");
+      return;
+    }
+
     const data = {
       title: title,
       detail: detail,
       done: false,
-      limit: convertToUTC(limit), // 期限をJSTからUTCに変換して設定
+      
     };
+
+    // limitが設定されている場合のみ、UTCに変換してdataに追加
+    if (limit) {
+      data.limit = convertToUTC(limit);
+    }
 
     axios
       .post(`${url}/lists/${selectListId}/tasks`, data, {
@@ -104,6 +115,7 @@ export const NewTask = () => {
             // step="1" // 入力値の間隔(1なら1秒ごと)
             onChange={handleLimitChange}
             className="new-task-limit"
+          
           />
           <br />
           <button
