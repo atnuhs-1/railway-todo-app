@@ -2,14 +2,19 @@
 @import '../variables';
 
 .edit-list {
-  width: 1000px;
-  margin: 0 auto;
+  margin: 20px;
+
+  h2 {
+    margin-bottom: 10px;
+  }
 
   .edit-list-form {
     color: #555555;
 
     .edit-list-title {
       width: 300px;
+      padding: 2px;
+      margin-top: 5px;
       margin-bottom: 25px;
     }
 
@@ -18,7 +23,7 @@
       border: solid 1px $error-color;
       width: 80px;
       height: 40px;
-      margin: 25px 5px;
+      margin-right: 5px;
       border-radius: 5px;
     }
 
@@ -34,4 +39,12 @@
 
 .error-message {
   color: $error-color;
+}
+
+@media (min-width: 768px) {
+  .edit-list {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+  }
 }

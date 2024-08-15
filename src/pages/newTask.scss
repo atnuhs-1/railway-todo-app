@@ -2,8 +2,11 @@
 @import '../variables';
 
 .new-task {
-  width: 1000px;
-  margin: 0 auto;
+  margin: 20px;
+
+  h2 {
+    margin-bottom: 10px;
+  }
 
   .new-task-form {
     color: #555555;
@@ -13,6 +16,7 @@
     .new-task-detail {
       width: 300px;
       margin-bottom: 25px;
+      padding: 2px;
     }
 
     .new-task-detail {
@@ -34,5 +38,21 @@
 
   .error-message {
     color: $error-color;
+  }
+}
+
+@media (min-width: 768px) {
+  .new-task {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+  }
+
+  .new-task-form {
+    .new-task-select-list,
+    .new-task-title,
+    .new-task-detail {
+      padding: 2px;
+    }
   }
 }

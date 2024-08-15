@@ -2,23 +2,41 @@
 @import '../variables';
 
 .new-list {
-  width: 1000px;
-  margin: 0 auto;
+  margin: 20px;
+
+  h2 {
+    margin-bottom: 10px;
+  }
 
   .new-list-form {
     color: #555555;
 
     .new-list-title {
       width: 300px;
+      padding: 2px;
+      margin-top: 5px;
       margin-bottom: 25px;
     }
 
     .new-list-button {
       background-color: $primary-color;
       color: #ffffff;
+      font-size: 15ppx;
       width: 80px;
       height: 40px;
       border-radius: 5px;
     }
+  }
+}
+
+@media (min-width: 768px) {
+  .new-list {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+  }
+
+  .new-list-form {
+    width: 300px;
   }
 }

@@ -2,8 +2,8 @@
 @import '../variables';
 
 .signup {
-  width: 500px;
-  margin: 0 auto;
+  width: 300px;
+  margin: 50px auto;
 
   .signup-form {
     margin: 25px 0;
@@ -29,5 +29,11 @@
 
   .error-message {
     color: $error-color;
+  }
+}
+
+@media(min-width: 768px) {
+  .signup {
+    width: 500px;
   }
 }

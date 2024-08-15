@@ -2,8 +2,11 @@
 @import '../variables';
 
 .edit-task {
-  width: 1000px;
-  margin: 0 auto;
+  margin: 20px;
+
+  h2 {
+    margin-bottom: 10px;
+  }
 
   .edit-task-form {
     color: #555555;
@@ -12,6 +15,21 @@
     .edit-task-detail {
       width: 300px;
       margin-bottom: 25px;
+      padding: 2px;
+    }
+
+    .edit-task-limit {
+      margin-bottom: 25px;
+      padding: 2px;
+    }
+
+    .status-selector {
+      margin-bottom: 25px;
+      padding: 2px;
+
+      >:first-child {
+        margin-right: 20px;
+      }
     }
 
     .delete-task-button {
@@ -19,7 +37,7 @@
       border: solid 1px $error-color;
       width: 80px;
       height: 40px;
-      margin: 25px 5px;
+      margin-right: 5px;
       border-radius: 5px;
     }
 

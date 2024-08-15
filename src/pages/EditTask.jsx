@@ -121,29 +121,33 @@ export const EditTask = () => {
             type="datetime-local"
             // step="1" // 入力値の間隔(1なら1秒ごと)
             onChange={handleLimitChange}
-            className="new-task-limit"
+            className="edit-task-limit"
             value={limit}
           />
           <br />
-          <div>
-            <input
-              type="radio"
-              id="todo"
-              name="status"
-              value="todo"
-              onChange={handleIsDoneChange}
-              checked={isDone === false ? 'checked' : ''}
-            />
-            未完了
-            <input
-              type="radio"
-              id="done"
-              name="status"
-              value="done"
-              onChange={handleIsDoneChange}
-              checked={isDone === true ? 'checked' : ''}
-            />
-            完了
+          <div className="status-selector">
+            <span>
+              <input
+                type="radio"
+                id="todo"
+                name="status"
+                value="todo"
+                onChange={handleIsDoneChange}
+                checked={isDone === false ? 'checked' : ''}
+              />
+              未完了
+            </span>
+            <span>
+              <input
+                type="radio"
+                id="done"
+                name="status"
+                value="done"
+                onChange={handleIsDoneChange}
+                checked={isDone === true ? 'checked' : ''}
+              />
+              完了
+            </span>
           </div>
           <button
             type="button"
