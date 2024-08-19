@@ -103,7 +103,7 @@ export const Home = () => {
           <div className="list-header">
             <h2>リスト一覧</h2>
             <div className="list-menu">
-              <p className='new-list-link'>
+              <p className="new-list-link">
                 <Link to="/list/new">リスト新規作成</Link>
               </p>
               <p>

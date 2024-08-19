@@ -24,9 +24,8 @@ export const NewTask = () => {
   const convertToUTC = (dateString) => new Date(dateString).toISOString();
 
   const onCreateTask = () => {
-
     if (!title.trim()) {
-      setErrorMessage("タイトルは必須です");
+      setErrorMessage('タイトルは必須です');
       return;
     }
 
@@ -34,7 +33,6 @@ export const NewTask = () => {
       title: title,
       detail: detail,
       done: false,
-      
     };
 
     // limitが設定されている場合のみ、UTCに変換してdataに追加
@@ -115,7 +113,6 @@ export const NewTask = () => {
             // step="1" // 入力値の間隔(1なら1秒ごと)
             onChange={handleLimitChange}
             className="new-task-limit"
-          
           />
           <br />
           <button
