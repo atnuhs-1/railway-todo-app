@@ -4,6 +4,10 @@
   margin: 20px;
   list-style: none;
 
+  a:visited {
+    color: #0000ff;
+  }
+
   .list-header {
     display: flex;
     flex-direction: column;

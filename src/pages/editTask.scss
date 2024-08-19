@@ -3,6 +3,9 @@
 
 .edit-task {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h2 {
     margin-bottom: 10px;
@@ -52,5 +55,18 @@
 
   .error-message {
     color: $error-color;
+  }
+}
+
+@media (min-width: 768px) {
+  .edit-task {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    align-items: center;
+  }
+
+  .edit-task-form {
+    width: 300px;
   }
 }

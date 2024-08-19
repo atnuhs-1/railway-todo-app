@@ -3,6 +3,9 @@
 
 .new-list {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   h2 {
     margin-bottom: 10px;
@@ -34,6 +37,7 @@
     display: flex;
     flex-direction: column;
     margin: 50px;
+    align-items: center;
   }
 
   .new-list-form {
